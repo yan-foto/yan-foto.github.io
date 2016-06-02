@@ -1,0 +1,68 @@
+@charset "UTF-8";
+
+$font-serif: "Merriweather", "PT Serif", Georgia, "Times New Roman", serif;
+$font-sans: "Libre Baskerville", "Helvetica Neue", Helvetica, sans-serif;
+
+.qblog {
+  .mdl-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    padding-bottom: 50px;
+  }
+}
+
+body {
+  background-image: url('/assets/bg.jpg');
+  background-size: cover;
+  background-position: center center;
+  transition: background-image 300ms ease-in 10s;
+}
+
+/** Typography */
+body {
+  font-family: $font-serif;
+  background-color: #fbfbfb;
+}
+
+a, h1, h2, h3, h4, h5, h6 {
+  font-family: $font-sans;
+  font-style: italic;
+  color: rgb(255,64,129);
+}
+
+a {
+  text-decoration: none;
+}
+
+/** Posts */
+.post {
+  .post-info {
+    font-family: $font-serif;
+    font-size: 12px;
+
+    > div {
+      margin: 5px 0;
+    }
+  }
+
+  &.content {
+    padding: 25px 50px;
+  }
+}
+
+blockquote {
+  &::after, &::before {
+    display: none;
+  }
+}
+
+/** Footer */
+footer.mdl-mini-footer {
+  background-color: transparent;
+
+  .social-icons {
+    a {
+      font-size: 18px;
+    }
+  }
+}
