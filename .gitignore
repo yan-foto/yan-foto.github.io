@@ -1,0 +1,5 @@
+# As of http://jekyll.tips/guide/github/
+_site/
+.sass-cache/
+.jekyll-metadata
+
