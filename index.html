@@ -1,0 +1,12 @@
+---
+layout: base
+---
+<img src="{{ '/assets/logo.png' | prepend: site.baseurl }}">
+<div class="posts">
+  {% for post in paginator.posts %}
+    {% include post.html %}
+  {% endfor %}
+  <div class="mdl-cell mdl-cell--6-col">
+    {% include pagination.html %}
+  </div>
+</div>
