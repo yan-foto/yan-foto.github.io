@@ -1,0 +1,54 @@
+{% assign url = page.url | prepend: site.url %}
+<div class="share-page">
+  {{ site.share_text }}
+
+  <div class="share-links">
+    {% if site.share_facebook %}
+      <a class="mdl-button mdl-js-button mdl-button--icon" href="https://facebook.com/sharer.php?u={{ url }}" rel="nofollow" target="_blank" title="Share on Facebook">
+        <i class="fa fa-facebook"></i>
+      </a>
+    {% endif %}
+
+    {% if site.share_twitter %}
+      <a class="mdl-button mdl-js-button mdl-button--icon" href="https://twitter.com/intent/tweet?text={{ page.title }}&url={{ url }}" rel="nofollow" target="_blank" title="Share on Twitter">
+        <i class="fa fa-twitter"></i>
+      </a>
+    {% endif %}
+
+    {% if site.share_googleplus %}
+      <a class="mdl-button mdl-js-button mdl-button--icon" href="https://plus.google.com/share?url={{ site.url }}{{ page.url }}" rel="nofollow" target="_blank" title="Share on Google+">
+        <i class="fa fa-google-plus"></i>
+      </a>
+    {% endif %}
+
+    {% if site.share_linkedin %}
+      <a class="mdl-button mdl-js-button mdl-button--icon" href="http://www.linkedin.com/shareArticle?url={{ site.url }}{{ page.url }}&title={{ page.title }}" rel="nofollow" target="_blank" title="Share on LinkedIn">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    {% endif %}
+
+    {% if site.share_digg %}
+      <a class="mdl-button mdl-js-button mdl-button--icon" href="http://digg.com/submit?url={{ site.url }}{{ page.url }}&title={{ page.title }}" rel="nofollow" target="_blank" title="Share on Digg">
+        <i class="fa fa-digg"></i>
+      </a>
+    {% endif %}
+
+    {% if site.share_tumblr %}
+      <a class="mdl-button mdl-js-button mdl-button--icon" href="http://www.tumblr.com/share/link?url={{ site.url }}{{ page.url }}&name={{ page.title }}" rel="nofollow" target="_blank" title="Share on Tumblr">
+        <i class="fa fa-tumblr"></i>
+      </a>
+    {% endif %}
+
+    {% if site.share_reddit %}
+      <a class="mdl-button mdl-js-button mdl-button--icon" href="http://reddit.com/submit?url={{ site.url }}{{ page.url }}&title={{ page.title }}" rel="nofollow" target="_blank" title="Share on Reddit">
+        <i class="fa fa-reddit"></i>
+      </a>
+    {% endif %}
+
+    {% if site.share_stumbleupon %}
+      <a class="mdl-button mdl-js-button mdl-button--icon" href="http://www.stumbleupon.com/submit?url={{ site.url }}{{ page.url }}&title={{ page.title }}" rel="nofollow" target="_blank" title="Share on StumbleUpon">
+        <i class="fa fa-stumbleupon"></i>
+      </a>
+    {% endif %}
+  </div>
+</div>
