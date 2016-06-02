@@ -1,0 +1,26 @@
+<div class="pagination">
+  {% if paginator.previous_page %}
+    {% if paginator.page == 2 %}
+      <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" href="{{ site.baseurl }}/">
+        Newer
+      </a>
+    {% else %}
+      <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" href="{{ site.baseurl }}/page{{paginator.previous_page}}/">
+        Newer
+      </a>
+    {% endif %}
+  {% else %}
+    <button class="mdl-button mdl-js-button mdl-button--raised  mdl-color--white" disabled>
+      Newer
+    </button>
+  {% endif %}
+  {% if paginator.next_page %}
+    <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" href="{{ site.baseurl }}/page{{paginator.next_page}}/">
+      Older
+    </a>
+  {% else %}
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-color--white" disabled>
+      Older
+    </button>
+  {% endif %}
+</div>
