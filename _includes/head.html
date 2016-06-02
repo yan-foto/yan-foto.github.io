@@ -38,7 +38,7 @@
     <meta name="twitter:description" content="{{ desc }}" />
     <meta name="twitter:image" content="{{ image }}" />
 
-    <link rel="shortcut icon" type="image/x-icon" href="{{ '/favicon.ico' | prepend.baseurl }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ '/favicon.ico' | prepend: stie.baseurl }}">
     <title>{{ site.title | strip_html }}{% if page.title %} // {{ page.title | strip_html }}{% endif %}</title>
 
     <!-- MDL CSS / JS -->
