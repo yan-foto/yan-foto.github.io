@@ -67,6 +67,8 @@ footer.mdl-mini-footer {
 }
 
 /** Syntax Highlighting */
-.highlight {
+pre {
+  padding: 16px;
+  background-color: #f8f8f8;
   overflow: auto;
 }
