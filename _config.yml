@@ -39,9 +39,12 @@ share_reddit: false
 share_stumbleupon: false
 
 # Build settings
-markdown:     kramdown
-redcarpet:
-  extensions: ['smart', 'tables', 'with_toc_data']
+highlighter: rouge
+markdown: kramdown
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
 permalink:    /:year/:month/:day/:title/
 paginate:     3
 sass:
