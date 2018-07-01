@@ -7,9 +7,6 @@ baseurl:     ""
 url:         "https://quaintous.com"
 language: en
 
-# Google analytics
-google_analytics: UA-19069240-4
-
 # Disqus post comments
 # (leave blank to disable Disqus)
 disqus_shortname: quaintous
