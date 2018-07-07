@@ -181,5 +181,7 @@ Depending on what you want to, you can avoid `for`s altogether by using followin
    a.some(el => el() === 'hello world')
    ```
 
+Just remember: using aforementioned methods adds an overhead to your program which impacts performance comparing to basic usage of `for` loops.
+
 ## Summary
 In this article concurrency and functional programming in JavaScript were addressed briefly. The most important lesson is 1) concurrency is taken care for you, 2) functional programming simplifies working with arrays.
