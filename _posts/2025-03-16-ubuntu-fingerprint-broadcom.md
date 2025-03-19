@@ -30,7 +30,7 @@ In the following I'll describe the (long) journey that it took me to find the ap
 
 ## Discovering hardware
 You'd imagine that it would be as easy as entering your serial number on the Dell Support website and get the hardware specs for your computer.
-Instead you are provided with a list of cryptic part numbers without any indications as to their purposes.
+Instead you are provided with a list of cryptic part numbers without any indications as to what their actual purposes is.
 Assuming that the reader is a simple USB deive, `lsusb` revealed the first clue:
 
 ```bash
@@ -46,13 +46,23 @@ At this point, I am still not sure about the exact model, but decided to go with
 Launchpad is always a good starting point to look for Ubuntu software.
 So I found [a page](https://launchpad.net/libfprint-2-tod1-broadcom) that pointed to a [git repo](https://git.launchpad.net/libfprint-2-tod1-broadcom) with recent activity.
 Jackpot!
-Cloning and installing the driver (i.e. running `install.sh` and `fprintd-enroll` was, however, not successful, regardless of which branch and tag I checked out.
-Some online discussions and I found a good pointer on how to debug `fprint` daemon:
+Cloning and installing the driver (i.e. running `install.sh`) was, however, not successful, regardless of which branch and tag I checked out.
+The installation ended with the following message:
+
+```
+Device firmware state will be automatically verified on device access. If firmware upgrade is required, the device will be unavailable for a few minutes for the duration of the firmware upgrade.
+```
+
+indicating that I need to address the device to initate firmware upgrade (if necessary).
+People out there suggested running `fprintd-enroll` and let it crash (due to firmware being upgraded in the background) and run it a second time afte a few minutres to make sure that the upgrade is succeeded.
+Later I found in one of the Ubuntu package issues a pointer by one of the maintainers on how to debug `fprint` daemon:
 
 ```bash
 env G_MESSAGE_DEBUG=all /usr/libexec/fprintd -t
 ```
 
+This rund the daemon in debug mode and let's you follow what is happening in the background, e.g., which files are actually being loaded.
+This however, did not help me further for the time being.
 People online pointed to [another git repository](https://git.launchpad.net/~oem-solutions-engineers/libfprint-2-tod1-broadcom/+git/libfprint-2-tod1-broadcom/) which seemed to have the same codebase but some differences.
 It was here that I noted a commit under `upstream` branch with the commit message `Add new upstream 6.1.26`.
 Again:
@@ -63,34 +73,33 @@ Again:
 * `fprintd-enroll`
 
 And again it seems that nothing is working.
-So I remove the code using `./rm.sh` and get some error message the some files are missing in `/var/lib/fprint/.broadcomCv3pkusFW/...`.
-Since `./install.sh` does nothing but copying files and `./rm.sh` is a constant list of files that are to be removed, I figure out that some files are not copied to the correct destination.
-A [comment on Arch Linux](https://aur.archlinux.org/packages/libfprint-2-tod1-broadcom#comment-999847) later confirms this.
-So I run `./install.sh` again and copy the missing files (from the git dir) and run the daemon:
+So I removed the installed files using `./rm.sh` and got an error message that some files marked for removal are missing in `/var/lib/fprint/.broadcomCv3pkusFW/` directory.
+Since `./install.sh` does nothing but copying the driver and firmware files, and `./rm.sh` uses a hardcoded list of files to remove, I figured out that some files are not copied to the correct destination.
+A [comment on Arch Linux](https://aur.archlinux.org/packages/libfprint-2-tod1-broadcom#comment-999847) later confirmed this assumption.
+So I ran `./install.sh` again and copied the missing files (from the git dir) manually:
 
 ```bash
 cp -a ./var/lib/fprint/fw/cv3plus /var/lib/fprint/.broadcomCv3plusFW
-https://aur.archlinux.org/packages/libfprint-2-tod1-broadcom#comment-999847
 ```
 
-and this time there are new messages!
-It seems that a new firmware is being installed.
-And afterwards `fprintd-enroll` acutally asks for my finger! (on the second run to be honest).
+After running the daemon again, I see some new messages about the firmware being installed.
+And afterwards `fprintd-enroll` acutally asked for my finger! (on the second run to be honest).
 
-This seems to be tedious and I'm starting to ask myself, where are these files in the git repo comming from?
+Yet, the whole procedure seemed to be tedious and I'm starting to ask myself, where are the files in the git repo comming from?
 Who are the maintainers?
 I'm about to put on my tin foil hat.
-It seems that these are legit people who put package proprietary code for Ubuntu.
+It seems that these are legit people who put package proprietary code for Ubuntu on behalf of hardware vendors, i.e. Broadcom (or Dell?).
 One of the maintainers even went out of his way and [uploaded a `.deb` package](https://launchpad.net/~andch/+archive/ubuntu/verify-ppa/+packages) for someone who was having difficulties getting his reader up and running.
 Nonetheless, I wasn't compfortable running code that I wasn't sure of its origin on my computer.
 
 ## Broadcom official driver and firmware
 I was about to give up.
-But before that I did one last search with my exact USB identifiers and ended up founding some guy on Mastodon who was [facing the same problem](https://mastodon.eddmil.es/@iMeddles/114046788648821512).
-And he gave the exact correct pointer to the [Broadcom repository](https://packages.broadcom.com/ui/repos/tree/General/dell-controlvault-drivers) in his post.
+But before that, I did one last search with my exact USB identifiers and ended up founding some guy on Mastodon who was [facing the same problem](https://mastodon.eddmil.es/@iMeddles/114046788648821512).
+And he gave the exact pointer to the [Broadcom repository](https://packages.broadcom.com/ui/repos/tree/General/dell-controlvault-drivers) in his post.
 Bingo!
-I first ran `./rm.sh` to remove installed files and also executed `rm -rf /var/lib/fprint/*` to remove any residual files.
-Then, I downloaded `brcm_linux_fp_6.1.155_6.1.028.0.tgz`, extracted it, installed it, and started the `fprint` deamon and got me an up-and-running fingerprint scanner.
+The archive in the repository has the same structure as the git repo on launchpad.
+Before extracting and installing official files, I first ran `./rm.sh` to remove installed files from the git repo, and also executed `rm -rf /var/lib/fprint/*` to remove any residual files.
+Then, I downloaded `brcm_linux_fp_6.1.155_6.1.028.0.tgz` from the Broadcom repo, extracted it, installed it, and started the `fprint` deamon and got me an up-and-running fingerprint scanner.
 
 At this point I could finally use my fingerprint reader without any security concerns (assuming that Broadcom is not acting evil here!).
 All I had to do was to run `pam-auth-update` and select fingerprint option for authentication.
