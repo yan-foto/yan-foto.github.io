@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Setup Broadcom 
+title:      Setup Broadcom Fingerprint Driver (Dell ControlVault3) on Ubuntu 24.04
 date:       2025-03-12 12:30:19
 summary:    Dell sells Ubuntu certified laptops, yet the latest releases are not always supported. That happened as I wanted to install Broadcom Fingerprint Drivers for my Dell Latitude.
 categories: linux auth fingerprint
