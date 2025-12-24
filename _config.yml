@@ -7,10 +7,6 @@ baseurl:     ""
 url:         "https://blog.quaintous.com"
 language: en
 
-# Disqus post comments
-# (leave blank to disable Disqus)
-disqus_shortname: quaintous
-
 # Social icons
 show_social_icons: true
 github_username: yan-foto
