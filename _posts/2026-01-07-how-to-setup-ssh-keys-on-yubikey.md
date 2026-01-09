@@ -88,7 +88,6 @@ When provided to the device, it reconstrcuts the private key and generate a sign
 In case of Yubikey, the device encrypts the private key (using AES) and deliver it to the client.
 If you prefer a resident key, i.e., on device, you can add `-O resident` to the command above.
 
-> [!NOTE]  
 > I opted for non-resident keys.
 > If someone wants access to my private keys they have to torture me twice: once to give them the FIDO PIN and once to give the password to decrypt my hard disk, where the encrypted key resides.
 > On the downside, I can only use my Yubikey on a machine where the encrypted private key is stored.
