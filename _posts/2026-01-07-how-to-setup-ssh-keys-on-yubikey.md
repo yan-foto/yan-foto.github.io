@@ -108,6 +108,15 @@ Host gitgoon.dev
 
 Replace `gitgoon.dev` with your server name (e.g., `codeberg.org`), or `*` if you want to have it applied to all hosts.
 
+If it still does not work, first make sure that `ssh-agent` is not running:
+
+```bash
+# '-k': "Kill the current agent (given by the SSH_AGENT_PID environment variable)."
+ssh-agent -k
+```
+
+then try again.
+
 ### Second issue: Explicit identity file
 I have multiple SSH keys on machine.
 Because I was using a custom name for my SSH key files, `ssh` could not automatically figure out the correct key to present to the server.
